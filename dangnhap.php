@@ -1,6 +1,21 @@
 <?php
 session_start();
 require 'config.php';
+if(isset($_POST['login'])){
+  $tk= $_POST['tai_khoan'];
+  $mk= $_POST['password'];
+  $sql = "SELECT * FROM users WHERE tai_khoan = '$tk' AND mat_khau = '$mk'  ";
+  $result = mysqli_query($conn, $sql);
+  if ($result && mysqli_num_rows($result) > 0) {
+            $user = mysqli_fetch_assoc($result);
+            $_SESSION['user'] = $user;
+            header("Location: trangchu.php");
+            exit();
+
+        } else {
+            $error = "Sai tên đăng nhập hoặc mật khẩu, vui lòng thử lại.";
+        }
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">

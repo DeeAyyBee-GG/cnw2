@@ -4,12 +4,12 @@
   require 'config.php';
 
   // Kiểm tra xem người dùng đã đăng nhập chưa
-  if (!isset($_SESSION['users'])) {
+  if (!isset($_SESSION['user'])) {
       header('Location: dangnhap.php');
       exit();
   }
 
-  $user = $_SESSION['users'];
+  $user = $_SESSION['user'];
   $role = $user['vai_tro'];
 ?>
 
