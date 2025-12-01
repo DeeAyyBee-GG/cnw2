@@ -1,3 +1,7 @@
+<?php
+session_start();
+require 'config.php';
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -63,3 +67,4 @@
     </form>
   </div>
 </body>
+</html>
