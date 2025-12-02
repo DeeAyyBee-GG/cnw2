@@ -1,3 +1,24 @@
+<?php
+  include 'config.php';
+  $error = "";
+  if (isset($_POST['register'])){
+    $ho_ten = $_POST['name'];
+    $tai_khoan = $_POST['tai_khoan'];
+    $mat_khau = $_POST['password'];
+    $cfmk = $_POST['confirm'];
+    if($mat_khau!=$cfmk){
+      $error = "Mật khẩu xác nhận không khớp.";
+    }else{
+      $sql="INSERT INTO users (ho_ten, tai_khoan, mat_khau) VALUES ('$ho_ten', '$tai_khoan', '$mat_khau')";
+      if (mysqli_query($conn, $sql)) {
+        $error="dang ki thanh cong";
+      } else {
+        $error = "Lỗi đăng ký tài khoản: " . mysqli_error($conn);
+      }
+    }
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>

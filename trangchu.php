@@ -10,7 +10,7 @@
   }
 
   $user = $_SESSION['user'];
-  $role = $user['vai_tro'];
+  $role = $user['role'];
 ?>
 
 <!doctype html>
@@ -47,11 +47,9 @@
         </div>
       </div>
       <nav class="d-none d-md-block">
-        <?php if ($role === "admin" || $role === "contributor" ||$role === "operator" ) :?>
         <a href="duan.php" class="text-white me-3">Dự án</a>
         <a href="thongtincanhan.php" class="text-white me-3">Thông tin cá nhân</a>
         <a href="dangxuat.php" class="text-white me-3">Đăng xuất</a>
-        <?php endif; ?>
       </nav>
     </div>
   </header>
