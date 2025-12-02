@@ -18,7 +18,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Trang chủ - Mini Blog</title>
+  <title>Trang chủ</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -47,9 +47,11 @@
         </div>
       </div>
       <nav class="d-none d-md-block">
-        <a href="trangchu.php" class="text-white me-3">Trang chủ</a>
-        <a href="dangnhap.php" class="text-white me-3">Đăng nhập</a>
-        <a href="dangki.php" class="text-white">Đăng ký</a>
+        <?php if ($role === "admin" || $role === "contributor" ||$role === "operator" ) :?>
+        <a href="duan.php" class="text-white me-3">Dự án</a>
+        <a href="thongtincanhan.php" class="text-white me-3">Thông tin cá nhân</a>
+        <a href="dangxuat.php" class="text-white me-3">Đăng xuất</a>
+        <?php endif; ?>
       </nav>
     </div>
   </header>
@@ -57,16 +59,15 @@
   <main class="container mb-5">
     <h4 class="mb-3"><i class="fa-solid fa-house"></i> Trang chủ - Danh sách dự án</h4>
 
-    <?php if($role==='viewer') : ?>
+    
     <form class="mb-4 search-box" method="get" action="trangchu.php">
       <div class="input-group">
         <input name="" class="form-control" placeholder="Tìm kiếm bài viết theo tiêu đề..." value=" ">
         <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
       </div>
     </form>
-    <?php endif; ?>
+    
     <div class="row gy-4">
-      
         <div class="col-12">
           <div class="card post-card p-3">
             <div class="row g-3 align-items-center">
@@ -91,7 +92,6 @@
             </div>
           </div>
         </div>
-      
     </div>
   </main>
 
