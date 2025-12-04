@@ -11,6 +11,15 @@
 
   $user = $_SESSION['user'];
   $role = $user['role'];
+
+  // Lấy danh sách dự án từ database bằng MySQLi
+$sql = "SELECT projects.*, users.ho_ten 
+        FROM projects 
+        JOIN users ON projects.created_by = users.id 
+        ORDER BY projects.created_at DESC";
+
+$result = mysqli_query($conn, $sql);
+
 ?>
 
 <!doctype html>
@@ -31,7 +40,7 @@
     .post-card{border-radius:8px;box-shadow:0 6px 20px rgba(44,62,80,.06)}
     .post-thumb{height:160px;object-fit:cover;border-radius:6px}
     .meta{font-size:.9rem;color:#6c757d}
-    .read-more{background:var(--brand);border:none}
+    .read-more{background:var(--brand);border:none;margin-left: 100px;}
     footer{background:#f8f9fa;border-top:1px solid #e9ecef;margin-top:80px}
     a{
         text-decoration: none;
@@ -49,6 +58,7 @@
       <nav class="d-none d-md-block">
         <a href="duan.php" class="text-white me-3">Dự án</a>
         <a href="thongtincanhan.php" class="text-white me-3">Thông tin cá nhân</a>
+        <?php echo htmlspecialchars($user['ho_ten']);?>
         <a href="dangxuat.php" class="text-white me-3">Đăng xuất</a>
       </nav>
     </div>
@@ -66,22 +76,23 @@
     </form>
     
     <div class="row gy-4">
+      <?php while($row = mysqli_fetch_assoc($result)) { ?>
         <div class="col-12">
           <div class="card post-card p-3">
-            <div class="row g-3 align-items-center">
+            <div class="row g-3 ">
               <div class="col-md-9">
                 <h4 class="mb-1">
-                  <a href="" class="text-decoration-none text-dark">Dự án 1</a>
+                  <a href="duanchitiet.php" class="text-decoration-none text-dark"></a><?php echo $row['title']?></a>
                 </h4>
-                <p class="mb-2 text-muted"></p>
+                <p class="mb-2 text-muted"><?php echo $row['description']?></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="meta">
-                    <i class="fa-regular fa-user"></i> Người tạo
+                    <i class="fa-regular fa-user"></i> Người tạo: <?php echo $row['ho_ten']?>
                     &nbsp;|&nbsp;
-                    <i class="fa-regular fa-calendar"></i> Thời gian tạo
+                    <i class="fa-regular fa-calendar"></i> Thời gian tạo : <?php echo $row['created_at']?>
                   </div>
                   <div>
-                    <a href="" class="btn btn-sm btn-primary read-more">
+                    <a href="duanchitiet.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-primary read-more">
                      Xem dự án
                     </a>
                   </div>
@@ -90,6 +101,7 @@
             </div>
           </div>
         </div>
+        <?php } ?>
     </div>
   </main>
 

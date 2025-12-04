@@ -10,6 +10,19 @@
   $user = $_SESSION['user'];
   $role = $user['role'];
 
+  $sql = "SELECT projects.*, users.ho_ten 
+        FROM projects 
+        JOIN users ON projects.created_by = users.id 
+        ORDER BY projects.created_at DESC";
+
+  $result = mysqli_query($conn, $sql);
+
+  if ($role !== 'admin' && $role !== 'contributor' && $role !== 'operator' && $role !== 'viewer') {
+      echo "Bạn không có quyền truy cập trang này.";
+      exit();
+
+  }
+
 ?>
 <!doctype html>
 <html lang="vi">
@@ -47,6 +60,7 @@
       <nav class="d-none d-md-block">
         <a href="duan.php" class="text-white me-3">Dự án</a>
         <a href="thongtincanhan.php" class="text-white me-3">Thông tin cá nhân</a>
+        <?php echo htmlspecialchars($user['ho_ten']);?>
         <a href="dangxuat.php" class="text-white me-3">Đăng xuất</a>
       </nav>
     </div>
@@ -60,22 +74,23 @@
     <?php endif; ?>
 </div>
     <div class="row gy-4">
+      <?php while($row = mysqli_fetch_assoc($result)) { ?>
         <div class="col-12">
           <div class="card post-card p-3">
             <div class="row g-3 align-items-center">
               <div class="col-md-9">
                 <h4 class="mb-1">
-                  <a href="" class="text-decoration-none text-dark">Dự án 1</a>
+                  <a href="duanchitiet.php" class="text-decoration-none text-dark"></a><?php echo $row['title']?></a>
                 </h4>
-                <p class="mb-2 text-muted"></p>
+                <p class="mb-2 text-muted"><?php echo $row['description']?></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="meta">
-                    <i class="fa-regular fa-user"></i> Người tạo
+                    <i class="fa-regular fa-user"></i> Người tạo: <?php echo $row['ho_ten']?>
                     &nbsp;|&nbsp;
-                    <i class="fa-regular fa-calendar"></i> Thời gian tạo
+                    <i class="fa-regular fa-calendar"></i> Thời gian tạo : <?php echo $row['created_at']?>
                   </div>
                   <div>
-                    <a href="" class="btn btn-sm btn-primary read-more">
+                    <a href="duanchitiet.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-primary read-more">
                      Xem dự án
                     </a>
                   </div>
@@ -84,6 +99,7 @@
             </div>
           </div>
         </div>
+        <?php } ?>
     </div>
   </main>
 
