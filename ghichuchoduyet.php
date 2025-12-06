@@ -8,77 +8,90 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// Lấy toàn bộ ghi chú từ bảng notes
+// Lấy các ghi chú pending
 $sql = "SELECT notes.*, users.ho_ten 
         FROM notes 
         JOIN users ON notes.created_by = users.id 
         WHERE notes.status = 'pending'
         ORDER BY notes.created_at DESC";
+
 $result = mysqli_query($conn, $sql);
 ?>
 <!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8">
-  <title>Chi tiết dự án</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="utf-8">
+<title>Ghi chú chờ duyệt</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     :root{--brand:#1877f2}
     body{background:#fafbfd;min-height:100vh}
-    .site-header{background:var(--brand);color:#fff;padding:.6rem 0;box-shadow:0 4px 18px rgba(24,119,242,.12)}
-    .site-brand{font-weight:700;letter-spacing:.3px}
-    .search-box .form-control{border-radius:30px 0 0 30px;padding:14px}
-    .search-box .btn{border-radius:0 30px 30px 0}
-    .post-card{border-radius:8px;box-shadow:0 6px 20px rgba(44,62,80,.06)}
-    .post-thumb{height:160px;object-fit:cover;border-radius:6px}
-    .meta{font-size:.9rem;color:#6c757d}
-    .read-more{background:var(--brand);border:none}
-    footer{background:#f8f9fa;border-top:1px solid #e9ecef;margin-top:80px}
-    a{
-        text-decoration: none;
-    }
-  </style>
+    a{text-decoration:none}
+</style>
 </head>
+
 <body>
-    <header class="site-header mb-4">
-    <div class="container d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3">
-        <div class="site-brand d-flex align-items-center gap-2">
-          <a href="trangchu.php" class="text-white me-3">PROJECT</a>
-        </div>
-      </div>
-      <nav class="d-none d-md-block">
-        <a href="duan.php" class="text-white me-3">Dự án</a>
-        <a href="dangxuat.php" class="text-white me-3">Đăng xuất</a>
-      </nav>
-    </div>
-  </header>
+
 <div class="container mt-4">
   <h3>Danh sách ghi chú chờ duyệt</h3>
+
   <?php if (mysqli_num_rows($result) > 0): ?>
     <ul class="list-group">
+
       <?php while ($note = mysqli_fetch_assoc($result)): ?>
-        <?php if($note['status']==='pending'): ?>
+        <?php $id = (int)$note['id']; ?>
+
         <li class="list-group-item">
-          <h5><?= htmlspecialchars($note['title']) ?></h5>
-          <p><?= nl2br(htmlspecialchars($note['content'])) ?></p>
+
+          <!-- Escape đầy đủ -->
+          <h5><?= htmlspecialchars($note['title'], ENT_QUOTES, 'UTF-8') ?></h5>
+
+          <p><?= nl2br(htmlspecialchars($note['content'], ENT_QUOTES, 'UTF-8')) ?></p>
+
           <small>
-            <i class="fa-regular fa-user"></i> <?= htmlspecialchars($note['ho_ten']) ?> |
-            <i class="fa-regular fa-calendar"></i> <?= date("d/m/Y H:i", strtotime($note['created_at'])) ?> |
-            Trạng thái: <?= htmlspecialchars($note['status']) ?>
+            <i class="fa-regular fa-user"></i>
+            <?= htmlspecialchars($note['ho_ten'], ENT_QUOTES, 'UTF-8') ?> |
+
+            <i class="fa-regular fa-calendar"></i>
+            <?= date("d/m/Y H:i", strtotime($note['created_at'])) ?> |
+
+            Trạng thái:
+            <span class="badge bg-warning">
+              <?= htmlspecialchars($note['status'], ENT_QUOTES, 'UTF-8') ?>
+            </span>
           </small>
-          <div>
-            <a href="duyetghichu.php?id=<?php echo $note['id'] ?>" class="btn btn-success btn-sm" onclick="return confirm('Duyệt ghi chú này?')">Duyệt</a>
-            <a href="xoaghichu.php?id=<?php echo $note['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa ghi chú này?')">Xóa</a>
+
+          <div class="mt-2">
+
+            <!-- Escape ID an toàn -->
+            <a href="duyetghichu.php?id=<?= $id ?>" 
+               class="btn btn-success btn-sm"
+               onclick="return confirm('Duyệt ghi chú này?')">
+               Duyệt
+            </a>
+
+            <a href="xoaghichu.php?id=<?= $id ?>" 
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Xóa ghi chú này?')">
+               Xóa
+            </a>
+
           </div>
+
         </li>
-        <?php endif; ?>
+
       <?php endwhile; ?>
+
     </ul>
-  <?php else: echo"Không có ghi chú nào đang chờ duyệt"; ?>
-  <br>
-    <?php endif; ?>
+
+  <?php else: ?>
+    <div class="alert alert-info">Không có ghi chú nào chờ duyệt</div>
+  <?php endif; ?>
+
   <a href="trangchu.php" class="btn btn-secondary mt-3">Quay lại</a>
+
 </div>
+
 </body>
 </html>

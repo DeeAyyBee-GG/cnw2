@@ -6,7 +6,7 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 $user = $_SESSION['user'];
-$note_id = $_GET['id'] ?? 0;
+$note_id = $_GET['id'];
 if (!$note_id) {
     die("ID ghi chú không hợp lệ.");
 }
