@@ -54,7 +54,7 @@ $result = mysqli_query($conn, $sql);
     </div>
   </header>
 <div class="container mt-4">
-  <h3>Danh sách ghi chú chờ duyệt</h3>
+  <h3>Danh sách ghi chú đã duyệt</h3>
   <?php if (mysqli_num_rows($result) > 0): ?>
     <ul class="list-group">
       <?php while ($note = mysqli_fetch_assoc($result)): ?>

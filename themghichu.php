@@ -5,8 +5,9 @@ if (!isset($_SESSION['user'])) {
     header("Location: dangnhap.php");
     exit;
 }
+$error = '';
 $user = $_SESSION['user'];
-$project_id = $_GET['project_id'] ?? 0;
+$project_id = $_GET['project_id'];
 
 if (isset($_POST['themghichu'])) {
     $title = $_POST['title'] ;
@@ -62,7 +63,6 @@ if (isset($_POST['themghichu'])) {
       </div>
       <nav class="d-none d-md-block">
         <a href="duan.php" class="text-white me-3">Dự án</a>
-        <a href="thongtincanhan.php" class="text-white me-3">Thông tin cá nhân</a>
         <a href="dangxuat.php" class="text-white me-3">Đăng xuất</a>
       </nav>
     </div>
@@ -89,3 +89,4 @@ if (isset($_POST['themghichu'])) {
 </div>
 </body>
 </html>
+

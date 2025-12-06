@@ -16,13 +16,6 @@
         ORDER BY projects.created_at DESC";
 
   $result = mysqli_query($conn, $sql);
-
-  if ($role !== 'admin' && $role !== 'contributor' && $role !== 'operator' && $role !== 'viewer') {
-      echo "Bạn không có quyền truy cập trang này.";
-      exit();
-
-  }
-
 ?>
 <!doctype html>
 <html lang="vi">
