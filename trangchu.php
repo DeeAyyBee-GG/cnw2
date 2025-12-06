@@ -20,6 +20,29 @@ $sql = "SELECT projects.*, users.ho_ten
 
 $result = mysqli_query($conn, $sql);
 
+  // Đếm số lượng người dùng
+  $sql_user = "SELECT COUNT(*) as count FROM users";
+  $user_count_result = mysqli_query($conn, $sql_user);
+  $user_count_row = mysqli_fetch_assoc($user_count_result);
+  $user_count = $user_count_row['count'];
+
+  // Đếm số lượng dự án
+  $sql_project = "SELECT COUNT(*) as count FROM projects";
+  $project_count_result = mysqli_query($conn, $sql_project);
+  $project_count_row = mysqli_fetch_assoc($project_count_result);
+  $project_count = $project_count_row['count'];
+
+  // Đếm số lượng ghi chú chờ duyệt
+  $sql_pending_notes = "SELECT COUNT(*) as count FROM notes WHERE status = 'pending'";
+  $pending_notes_result = mysqli_query($conn, $sql_pending_notes);
+  $pending_notes_row = mysqli_fetch_assoc($pending_notes_result);
+  $pending_notes_count = $pending_notes_row['count'];
+
+  // Đếm số lượng ghi chú đã duyệt
+  $sql_confirmed_notes = "SELECT COUNT(*) as count FROM notes WHERE status = 'confirmed'";
+  $confirmed_notes_result = mysqli_query($conn, $sql_confirmed_notes);
+  $confirmed_notes_row = mysqli_fetch_assoc($confirmed_notes_result);
+  $confirmed_notes_count = $confirmed_notes_row['count'];
 ?>
 
 <!doctype html>
@@ -63,8 +86,58 @@ $result = mysqli_query($conn, $sql);
       </nav>
     </div>
   </header>
+    <?php if($role ==='admin'):?>
+    <div class="container mb-5">
+          <h3>Xin chào, <?php echo htmlspecialchars($user['ho_ten']); ?>! 👋</h3>
+          <p> Đây là các thống kê hệ thống của bạn.</p>
+        </div>
+      <div class="container">
+    <div class="blur-card">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Dự Án</h5>
+              <p class="card-text"><?php echo $project_count; ?></p>
+              <a href="duan.php" class="btn btn-primary btn-sm">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Quản lí người dùng</h5>
+              <p class="card-text"><?php echo $user_count ?></p>
+              <a href="quanlynguoidung.php" class="btn btn-primary btn-sm">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Ghi chú chờ duyệt</h5>
+              <p class="card-text"><?php echo $pending_notes_count; ?></p>
+              <a href="ghichuchoduyet.php" class="btn btn-primary btn-sm">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Ghi chú Đã duyệt</h5>
+              <p class="card-text"><?php echo $confirmed_notes_count; ?></p>
+              <a href="ghichudaduyet.php" class="btn btn-primary btn-sm">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <main class="container mb-5">
+
+    <?php endif; ?>
+
+
+  <?php if ($role==='viewer'||$role==='contributor'||$role==='operator'):?>
+    <main class="container mb-5">
     <h4 class="mb-3"><i class="fa-solid fa-house"></i> Trang chủ - Danh sách dự án</h4>
     <div class="row gy-4">
       <?php while($row = mysqli_fetch_assoc($result)) { ?>
@@ -95,6 +168,7 @@ $result = mysqli_query($conn, $sql);
         <?php } ?>
     </div>
   </main>
+  <?php endif; ?>
 
   <footer class="py-4 text-center text-muted">
     <div class="container">

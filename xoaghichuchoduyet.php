@@ -10,14 +10,20 @@ $note_id = $_GET['id'] ?? 0;
 if (!$note_id) {
     die("ID ghi chú không hợp lệ.");
 }
-if ($user['role'] !== 'admin') {
-    die("Bạn không có quyền duyệt tin tức.");
+// Lấy thông tin ghi chú
+$sql = "SELECT * FROM notes WHERE id = $note_id";
+$result = mysqli_query($conn, $sql);
+$note = mysqli_fetch_assoc($result);
+if (!$note) {
+    die("Không tìm thấy ghi chú.");
 }
-$sql = "UPDATE notes SET status = 'confirmed' WHERE id = $note_id";
+
+$sql = "DELETE FROM notes WHERE id = $note_id";
 if (mysqli_query($conn, $sql)) {
     header("Location: ghichuchoduyet.php");
     exit();
 } else {
-    echo "Lỗi khi duyệt ghi chú: " . mysqli_error($conn);
+    echo "Lỗi khi xóa ghi chú: " . mysqli_error($conn);
 }
+
 ?>

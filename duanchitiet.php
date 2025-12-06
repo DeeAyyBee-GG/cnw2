@@ -9,7 +9,9 @@ if (!isset($_SESSION['user'])) {
 }
 
 $user = $_SESSION['user'];
+$user_id = $user['id'];
 $role = $user['role'];
+$note_id = $_GET['note_id'] ?? null;
 
 // Lấy id dự án từ URL
 if (!isset($_GET['id'])) {
@@ -39,9 +41,9 @@ $sql_notes = "SELECT notes.*, users.ho_ten
               ORDER BY notes.created_at DESC";
 $result_notes = mysqli_query($conn, $sql_notes);
 $notes = [];
-// while ($row = mysqli_fetch_assoc($result_notes)) {
-//     $notes[] = $row;
-// }
+while ($row = mysqli_fetch_assoc($result_notes)) {
+    $notes[] = $row;
+}
 ?>
 <!doctype html>
 <html lang="vi">
@@ -77,6 +79,7 @@ $notes = [];
       <nav class="d-none d-md-block">
         <a href="duan.php" class="text-white me-3">Dự án</a>
         <a href="thongtincanhan.php" class="text-white me-3">Thông tin cá nhân</a>
+        <?php echo htmlspecialchars($user['ho_ten']);?>
         <a href="dangxuat.php" class="text-white me-3">Đăng xuất</a>
       </nav>
     </div>
@@ -87,7 +90,7 @@ $notes = [];
   <p><strong>Mô tả:</strong> <?= nl2br(htmlspecialchars($project['description'])) ?></p>
   <p><strong>Người tạo:</strong> <?= htmlspecialchars($project['ho_ten']) ?></p>
   <p><strong>Ngày tạo:</strong> <?= date("d/m/Y H:i", strtotime($project['created_at'])) ?></p>
-    <?php if ($role === 'admin'): ?>
+    <?php if ($role === 'admin'||$role === 'contributor'||$role === 'operator'): ?>
     <a href="themghichu.php?project_id=<?= $project_id ?>" class="btn btn-primary">
       Thêm ghi chú
     </a>
@@ -99,7 +102,8 @@ $notes = [];
   <?php else: ?>
     <ul class="list-group mb-3">
       <?php foreach ($notes as $note): ?>
-        <li class="list-group-item">
+        <?php if ($note['status'] === 'confirmed' ):?>
+          <li class="list-group-item">
           <h5><?= htmlspecialchars($note['title']) ?></h5>
           <p><?= nl2br(htmlspecialchars($note['content'])) ?></p>
           <small>
@@ -107,7 +111,15 @@ $notes = [];
             <i class="fa-regular fa-calendar"></i> <?= date("d/m/Y H:i", strtotime($note['created_at'])) ?> |
             Trạng thái: <?= htmlspecialchars($note['status']) ?>
           </small>
+          <?php if($role==='admin'|| $user_id === $note['created_by'] || $role==='operator' ): ?>
+        <div>
+        <a href="suaghichu.php?id=<?php echo $note['id'] ?>" class="btn btn-warning btn-sm">Sửa</a>
+        <a href="xoaghichu.php?id=<?php echo $note['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa ghi chú này?')">Xóa</a>
+        </div>
+        <?php endif;?>
         </li>
+        <?php endif; ?>
+        
       <?php endforeach; ?>
     </ul>
   <?php endif; ?>
