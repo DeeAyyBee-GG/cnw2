@@ -9,8 +9,8 @@ $user = $_SESSION['user'];
 $project_id = $_GET['project_id'] ?? 0;
 
 if (isset($_POST['themghichu'])) {
-    $title = $_POST['title'] ?? '';
-    $content = $_POST['content'] ?? '';
+    $title = $_POST['title'] ;
+    $content = $_POST['content'] ;
 
     if (empty($title)) {
         $error = "Tiêu đề ghi chú không được để trống.";
@@ -28,10 +28,7 @@ if (isset($_POST['themghichu'])) {
         }
     }
 }
-
 ?>
-
-
 <!doctype html>
 <html lang="vi">
 <head>
