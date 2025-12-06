@@ -93,6 +93,14 @@
                     <a href="duanchitiet.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-primary read-more">
                      Xem dự án
                     </a>
+                    <?php if ($role === "admin") :?>
+                    <a href="suaduan.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger read-more">
+                     Sửa dự án
+                    </a>
+                    <a href="xoaduan.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger read-more" onclick="return confirm('Bạn có chắc chắn muốn xóa dự án này?');">
+                     Xóa dự án
+                    </a>
+                    <?php endif; ?>
                   </div>
                 </div>
               </div>

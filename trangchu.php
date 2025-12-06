@@ -66,15 +66,6 @@ $result = mysqli_query($conn, $sql);
 
   <main class="container mb-5">
     <h4 class="mb-3"><i class="fa-solid fa-house"></i> Trang chủ - Danh sách dự án</h4>
-
-    
-    <form class="mb-4 search-box" method="get" action="trangchu.php">
-      <div class="input-group">
-        <input name="" class="form-control" placeholder="Tìm kiếm bài viết theo tiêu đề..." value=" ">
-        <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
-      </div>
-    </form>
-    
     <div class="row gy-4">
       <?php while($row = mysqli_fetch_assoc($result)) { ?>
         <div class="col-12">
