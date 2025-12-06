@@ -80,7 +80,6 @@ $result = mysqli_query($conn, $sql);
       </div>
       <nav class="d-none d-md-block">
         <a href="duan.php" class="text-white me-3">Dự án</a>
-        <a href="thongtincanhan.php" class="text-white me-3">Thông tin cá nhân</a>
         <?php echo htmlspecialchars($user['ho_ten']);?>
         <a href="dangxuat.php" class="text-white me-3">Đăng xuất</a>
       </nav>

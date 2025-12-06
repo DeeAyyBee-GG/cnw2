@@ -55,7 +55,6 @@ if(isset($_POST['themduan'])){
       </div>
       <nav class="d-none d-md-block">
         <a href="duan.php" class="text-white me-3">Dự án</a>
-        <a href="thongtincanhan.php" class="text-white me-3">Thông tin cá nhân</a>
         <a href="dangxuat.php" class="text-white me-3">Đăng xuất</a>
       </nav>
     </div>
