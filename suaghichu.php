@@ -93,7 +93,7 @@ if (isset($_POST['update_note'])) {
 
     <button type="submit" name="update_note" class="btn btn-primary">Cập nhật</button>
     
-    <a href="trangchu.php?id=<?= $note['project_id'] ?>" class="btn btn-secondary">
+    <a href="duanchitiet.php?id=<?= $note['project_id'] ?>" class="btn btn-secondary">
         Quay lại
     </a>
   </form>
