@@ -27,7 +27,7 @@ $user = mysqli_fetch_assoc($result);
 
 // Xử lý cập nhật
 if (isset($_POST['update'])) {
-    $ho_ten = mysqli_query($conn, $_POST['ho_ten']);
+    $ho_ten = mysqli_query($conn, $_POST['ho_ten']); #mysqli_real_escape_string($conn, $_POST['ho_ten']);
     $tai_khoan = mysqli_query($conn, $_POST['tai_khoan']);
     $mat_khau = mysqli_query($conn, $_POST['mat_khau']);
     $role = mysqli_query($conn, $_POST['role']);
@@ -56,20 +56,7 @@ if (isset($_POST['update'])) {
 </head>
 
 <body class="bg-light">
-<header class="site-header mb-4">
-    <div class="container d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3">
-        <div class="site-brand d-flex align-items-center gap-2">
-          <a href="trangchu.php" class="text-white me-3">PROJECT</a>
-        </div>
-      </div>
-      <nav class="d-none d-md-block">
-        <a href="duan.php" class="text-white me-3">Dự án</a>
-        <?php echo htmlspecialchars($user['ho_ten']);?>
-        <a href="dangxuat.php" class="text-white me-3">Đăng xuất</a>
-      </nav>
-    </div>
-  </header>
+
 
 <div class="container mt-5">
 

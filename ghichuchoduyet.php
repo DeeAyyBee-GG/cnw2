@@ -65,13 +65,13 @@ $result = mysqli_query($conn, $sql);
           <div class="mt-2">
 
             <!-- Escape ID an toàn -->
-            <a href="duyetghichu.php?id=<?= $id ?>" 
+            <a href="duyetghichu.php?id=<?php echo $id; ?>" 
                class="btn btn-success btn-sm"
                onclick="return confirm('Duyệt ghi chú này?')">
                Duyệt
-            </a>
-
-            <a href="xoaghichu.php?id=<?= $id ?>" 
+            </a>  
+            <a href="suaghichu.php?id=<?php echo $note['id'] ?>" class="btn btn-warning btn-sm">Sửa</a>
+            <a href="xoaghichu.php?id=<?php echo $id; ?>" 
                class="btn btn-danger btn-sm"
                onclick="return confirm('Xóa ghi chú này?')">
                Xóa

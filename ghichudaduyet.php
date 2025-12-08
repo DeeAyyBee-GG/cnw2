@@ -67,7 +67,9 @@ $result = mysqli_query($conn, $sql);
             <i class="fa-regular fa-calendar"></i> <?= date("d/m/Y H:i", strtotime($note['created_at'])) ?> |
             Trạng thái: <?= htmlspecialchars($note['status']) ?>
           </small>
+          
           <div>
+            <a href="suaghichu.php?id=<?php echo $note['id'] ?>" class="btn btn-warning btn-sm">Sửa</a>
             <a href="xoaghichu.php?id=<?php echo $note['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa ghi chú này?')">Xóa</a>
           </div>
         </li>
