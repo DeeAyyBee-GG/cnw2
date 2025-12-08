@@ -32,7 +32,15 @@ if(isset($_POST['login'])){
       align-items: center;
       justify-content: center;
     }
-
+    .d1{
+      position: absolute;
+      bottom: 50px;
+      left: 560px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 14px;
+    }
     .blur-card {
       backdrop-filter: blur(10px);
       background-color: rgba(255, 255, 255, 0.3);
@@ -81,5 +89,16 @@ if(isset($_POST['login'])){
       <?php if (isset($error)) echo "<div class='text-danger'>$error</div>"; ?>
     </form>
   </div>
+  <form>
+  <div class ="d1">
+    <?php
+      $sql = "SELECT * FROM users";
+      $result = mysqli_query($conn, $sql);
+      while ($row = mysqli_fetch_assoc($result)) {
+          echo "Tài khoản: " . $row['tai_khoan'] . " - Mật khẩu: " . $row['mat_khau'] . " - Vai trò " . $row['role'] . "<br>" ;
+      }
+    ?>
+  </div>
+  </form>
 </body>
 </html>
