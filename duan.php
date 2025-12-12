@@ -105,7 +105,7 @@
 
   <footer class="py-4 text-center text-muted">
     <div class="container">
-     Sản phẩm nhóm CNW Hiếu Hiệp
+     Sản phẩm nhóm CNW
     </div>
   </footer>
 

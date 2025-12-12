@@ -13,7 +13,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("Không tìm thấy ghi chú!");
 }
 
-$note_id = intval($_GET['id']);
+$note_id = $_GET['id'];
 
 // Lấy dữ liệu ghi chú từ DB
 $sql = "SELECT * FROM notes WHERE id = $note_id";

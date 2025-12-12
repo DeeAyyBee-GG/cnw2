@@ -18,7 +18,7 @@ if (!isset($_GET['id'])) {
     header('Location: trangchu.php');
     exit();
 }
-$project_id = intval($_GET['id']);
+$project_id = $_GET['id'];
 
 // Lấy thông tin dự án
 $sql = "SELECT projects.*, users.ho_ten 

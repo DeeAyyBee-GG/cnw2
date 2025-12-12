@@ -11,7 +11,7 @@
     }else{
       $sql="INSERT INTO users (ho_ten, tai_khoan, mat_khau) VALUES ('$ho_ten', '$tai_khoan', '$mat_khau')";
       if (mysqli_query($conn, $sql)) {
-        $error="dang ki thanh cong";
+        $error="Dang ki thanh cong";
       } else {
         $error = "Lỗi đăng ký tài khoản: " . mysqli_error($conn);
       }

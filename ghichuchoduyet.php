@@ -40,7 +40,7 @@ $result = mysqli_query($conn, $sql);
     <ul class="list-group">
 
       <?php while ($note = mysqli_fetch_assoc($result)): ?>
-        <?php $id = (int)$note['id']; ?>
+        <?php $id = $note['id']; ?>
 
         <li class="list-group-item">
 

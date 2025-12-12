@@ -13,7 +13,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("Không tìm thấy ID người dùng.");
 }
 
-$id = intval($_GET['id']);
+$id = $_GET['id'];
 
 // Lấy thông tin user
 $sql = "SELECT * FROM users WHERE id = $id";
@@ -27,10 +27,10 @@ $user = mysqli_fetch_assoc($result);
 
 // Xử lý cập nhật
 if (isset($_POST['update'])) {
-    $ho_ten = mysqli_query($conn, $_POST['ho_ten']); #mysqli_real_escape_string($conn, $_POST['ho_ten']);
-    $tai_khoan = mysqli_query($conn, $_POST['tai_khoan']);
-    $mat_khau = mysqli_query($conn, $_POST['mat_khau']);
-    $role = mysqli_query($conn, $_POST['role']);
+    $ho_ten = $_POST['ho_ten']; #mysqli_real_escape_string($conn, $_POST['ho_ten']);
+    $tai_khoan = $_POST['tai_khoan'];
+    $mat_khau = $_POST['mat_khau'];
+    $role = $_POST['role'];
 
     $update_sql = "UPDATE users SET 
                     ho_ten = '$ho_ten',
